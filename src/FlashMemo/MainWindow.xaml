@@ -1,0 +1,49 @@
+<Window x:Class="FlashMemo.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="FlashMemo - パッとメモ"
+        Width="400" 
+        Height="300"
+        MinWidth="300"
+        MinHeight="200"
+        WindowStartupLocation="CenterScreen"
+        ResizeMode="CanResize"
+        ShowInTaskbar="True"
+        Topmost="True"
+        Background="White"
+        AllowsTransparency="False"
+        WindowStyle="SingleBorderWindow"
+        Deactivated="Window_Deactivated"
+        Loaded="Window_Loaded">
+    
+    <Grid Margin="12">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+        
+        <!-- メモ入力エリア -->
+        <TextBox x:Name="MemoTextBox"
+                 Grid.Row="0"
+                 Style="{StaticResource ModernTextBoxStyle}"
+                 Margin="0,0,0,12"
+                 KeyDown="MemoTextBox_KeyDown"/>
+        
+        <!-- ボタンエリア -->
+        <StackPanel Grid.Row="1" 
+                    Orientation="Horizontal" 
+                    HorizontalAlignment="Right">
+            <Button x:Name="CopyCloseButton"
+                    Content="コピー&amp;閉じる"
+                    Style="{StaticResource ModernButtonStyle}"
+                    Click="CopyCloseButton_Click"
+                    IsDefault="True"
+                    Margin="0,0,8,0"/>
+            <Button x:Name="CloseButton"
+                    Content="閉じる"
+                    Style="{StaticResource ModernButtonStyle}"
+                    Background="#6C757D"
+                    Click="CloseButton_Click"/>
+        </StackPanel>
+    </Grid>
+</Window>
