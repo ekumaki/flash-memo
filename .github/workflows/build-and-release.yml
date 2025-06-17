@@ -2,128 +2,128 @@ name: Build and Release FlashMemo
 
 
 
-  on:
+on:
 
-    push:
+  push:
 
-      branches: [ main, develop ]
+    branches: [ main, develop ]
 
-    pull_request:
+  pull_request:
 
-      branches: [ main, develop ]
+    branches: [ main, develop ]
 
-    workflow_dispatch:  # 手動実行を有効化
+  workflow_dispatch:  # 手動実行を有効化
 
 
 
-  jobs:
+jobs:
 
-    build:
+  build:
 
-      runs-on: windows-latest
+    runs-on: windows-latest
 
 
 
-      steps:
+    steps:
 
-      - uses: actions/checkout@v4
+    - uses: actions/checkout@v4
 
 
 
-      - name: Setup .NET
+    - name: Setup .NET
 
-        uses: actions/setup-dotnet@v4
+      uses: actions/setup-dotnet@v4
 
-        with:
+      with:
 
-          dotnet-version: 8.0.x
+        dotnet-version: 8.0.x
 
 
 
-      - name: Restore dependencies
+    - name: Restore dependencies
 
-        run: dotnet restore src/FlashMemo/FlashMemo.csproj
+      run: dotnet restore src/FlashMemo/FlashMemo.csproj
 
 
 
-      - name: Build Release
+    - name: Build Release
 
-        run: dotnet publish src/FlashMemo/FlashMemo.csproj -c Release -r win-x64 --self-contained false -p:PublishSingleFile=true -p:PublishReadyToRun=true -o build/output/Release
+      run: dotnet publish src/FlashMemo/FlashMemo.csproj -c Release -r win-x64 --self-contained false -p:PublishSingleFile=true -p:PublishReadyToRun=true -o build/output/Release
 
 
 
-      - name: Build Standalone
+    - name: Build Standalone
 
-        run: dotnet publish src/FlashMemo/FlashMemo.csproj -c Release -r win-x64 --self-contained true -p:PublishSingleFile=true -p:PublishReadyToRun=true -p:PublishTrimmed=true -o
+      run: dotnet publish src/FlashMemo/FlashMemo.csproj -c Release -r win-x64 --self-contained true -p:PublishSingleFile=true -p:PublishReadyToRun=true -p:PublishTrimmed=true -o
 
-  build/output/Standalone
+build/output/Standalone
 
 
 
-      - name: Check Build Results
+    - name: Check Build Results
 
-        shell: powershell
+      shell: powershell
 
-        run: |
+      run: |
 
-          if (Test-Path "build/output/Release/FlashMemo.exe") {
+        if (Test-Path "build/output/Release/FlashMemo.exe") {
 
-            Write-Host "✅ Release build successful"
+          Write-Host "✅ Release build successful"
 
-            $size = (Get-Item "build/output/Release/FlashMemo.exe").Length
+          $size = (Get-Item "build/output/Release/FlashMemo.exe").Length
 
-            Write-Host "📦 Release binary size: $([math]::Round($size/1MB, 2)) MB"
+          Write-Host "📦 Release binary size: $([math]::Round($size/1MB, 2)) MB"
 
-          }
+        }
 
-          if (Test-Path "build/output/Standalone/FlashMemo.exe") {
+        if (Test-Path "build/output/Standalone/FlashMemo.exe") {
 
-            Write-Host "✅ Standalone build successful"  
+          Write-Host "✅ Standalone build successful"  
 
-            $size = (Get-Item "build/output/Standalone/FlashMemo.exe").Length
+          $size = (Get-Item "build/output/Standalone/FlashMemo.exe").Length
 
-            Write-Host "📦 Standalone binary size: $([math]::Round($size/1MB, 2)) MB"
+          Write-Host "📦 Standalone binary size: $([math]::Round($size/1MB, 2)) MB"
 
-          }
+        }
 
 
 
-      - name: Create Packages
+    - name: Create Packages
 
-        shell: powershell
+      shell: powershell
 
-        run: |
+      run: |
 
-          New-Item -ItemType Directory -Force -Path "build/packages"
+        New-Item -ItemType Directory -Force -Path "build/packages"
 
 
 
-          # Release版（.NET Runtime必要）
+        # Release版（.NET Runtime必要）
 
-          Compress-Archive -Path "build/output/Release/FlashMemo.exe","README.md","LICENSE" -DestinationPath "build/packages/FlashMemo-Portable-v1.0.zip"
+        Compress-Archive -Path "build/output/Release/FlashMemo.exe","README.md","LICENSE" -DestinationPath "build/packages/FlashMemo-Portable-v1.0.zip"
 
 
 
-          # Standalone版（.NET Runtime不要）
+        # Standalone版（.NET Runtime不要）
 
-          Compress-Archive -Path "build/output/Standalone/FlashMemo.exe","README.md","LICENSE" -DestinationPath "build/packages/FlashMemo-Standalone-v1.0.zip"
+        Compress-Archive -Path "build/output/Standalone/FlashMemo.exe","README.md","LICENSE" -DestinationPath "build/packages/FlashMemo-Standalone-v1.0.zip"
 
 
 
-      - name: Upload Artifacts
+    - name: Upload Artifacts
 
-        uses: actions/upload-artifact@v4
+      uses: actions/upload-artifact@v4
 
-        with:
+      with:
 
-          name: FlashMemo-Binaries
+        name: FlashMemo-Binaries
 
-          path: |
+        path: |
 
-            build/packages/*.zip
+          build/packages/*.zip
 
-            build/output/Release/FlashMemo.exe
+          build/output/Release/FlashMemo.exe
 
-            build/output/Standalone/FlashMemo.exe
+          build/output/Standalone/FlashMemo.exe
 
-          retention-days: 30
+        retention-days: 30
