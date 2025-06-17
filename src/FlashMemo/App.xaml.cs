@@ -1,4 +1,5 @@
 using System;
+using System.Drawing;
 using System.Windows;
 using FlashMemo.Services;
 
@@ -47,7 +48,7 @@ namespace FlashMemo
         {
             _notifyIcon = new System.Windows.Forms.NotifyIcon
             {
-                Icon = new System.Drawing.Icon(@"..\..\src\Assets\Icons\app-16.ico"),
+                Icon = SystemIcons.Application,
                 Text = "FlashMemo - パッとメモ (Ctrl+Shift+M)",
                 Visible = true
             };

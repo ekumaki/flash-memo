@@ -5,7 +5,6 @@
     <TargetFramework>net8.0-windows</TargetFramework>
     <UseWPF>true</UseWPF>
     <StartupObject>FlashMemo.App</StartupObject>
-    <ApplicationIcon>..\..\src\Assets\Icons\app-256.ico</ApplicationIcon>
     <AssemblyTitle>FlashMemo - パッとメモ</AssemblyTitle>
     <AssemblyDescription>Lightning-fast memo app for Windows</AssemblyDescription>
     <AssemblyVersion>1.0.0.0</AssemblyVersion>
@@ -13,7 +12,6 @@
     <Copyright>© 2024 FlashMemo</Copyright>
     <Company>FlashMemo</Company>
     <Product>FlashMemo</Product>
-    <AssemblyMetadata Include="AppDisplayName" Value="パッとメモ / FlashMemo" />
     <PublishSingleFile>true</PublishSingleFile>
     <PublishReadyToRun>true</PublishReadyToRun>
     <SelfContained>false</SelfContained>
