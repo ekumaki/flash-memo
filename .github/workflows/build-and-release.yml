@@ -1,0 +1,129 @@
+name: Build and Release FlashMemo
+
+
+
+  on:
+
+    push:
+
+      branches: [ main, develop ]
+
+    pull_request:
+
+      branches: [ main, develop ]
+
+    workflow_dispatch:  # 手動実行を有効化
+
+
+
+  jobs:
+
+    build:
+
+      runs-on: windows-latest
+
+
+
+      steps:
+
+      - uses: actions/checkout@v4
+
+
+
+      - name: Setup .NET
+
+        uses: actions/setup-dotnet@v4
+
+        with:
+
+          dotnet-version: 8.0.x
+
+
+
+      - name: Restore dependencies
+
+        run: dotnet restore src/FlashMemo/FlashMemo.csproj
+
+
+
+      - name: Build Release
+
+        run: dotnet publish src/FlashMemo/FlashMemo.csproj -c Release -r win-x64 --self-contained false -p:PublishSingleFile=true -p:PublishReadyToRun=true -o build/output/Release
+
+
+
+      - name: Build Standalone
+
+        run: dotnet publish src/FlashMemo/FlashMemo.csproj -c Release -r win-x64 --self-contained true -p:PublishSingleFile=true -p:PublishReadyToRun=true -p:PublishTrimmed=true -o
+
+  build/output/Standalone
+
+
+
+      - name: Check Build Results
+
+        shell: powershell
+
+        run: |
+
+          if (Test-Path "build/output/Release/FlashMemo.exe") {
+
+            Write-Host "✅ Release build successful"
+
+            $size = (Get-Item "build/output/Release/FlashMemo.exe").Length
+
+            Write-Host "📦 Release binary size: $([math]::Round($size/1MB, 2)) MB"
+
+          }
+
+          if (Test-Path "build/output/Standalone/FlashMemo.exe") {
+
+            Write-Host "✅ Standalone build successful"  
+
+            $size = (Get-Item "build/output/Standalone/FlashMemo.exe").Length
+
+            Write-Host "📦 Standalone binary size: $([math]::Round($size/1MB, 2)) MB"
+
+          }
+
+
+
+      - name: Create Packages
+
+        shell: powershell
+
+        run: |
+
+          New-Item -ItemType Directory -Force -Path "build/packages"
+
+
+
+          # Release版（.NET Runtime必要）
+
+          Compress-Archive -Path "build/output/Release/FlashMemo.exe","README.md","LICENSE" -DestinationPath "build/packages/FlashMemo-Portable-v1.0.zip"
+
+
+
+          # Standalone版（.NET Runtime不要）
+
+          Compress-Archive -Path "build/output/Standalone/FlashMemo.exe","README.md","LICENSE" -DestinationPath "build/packages/FlashMemo-Standalone-v1.0.zip"
+
+
+
+      - name: Upload Artifacts
+
+        uses: actions/upload-artifact@v4
+
+        with:
+
+          name: FlashMemo-Binaries
+
+          path: |
+
+            build/packages/*.zip
+
+            build/output/Release/FlashMemo.exe
+
+            build/output/Standalone/FlashMemo.exe
+
+          retention-days: 30
