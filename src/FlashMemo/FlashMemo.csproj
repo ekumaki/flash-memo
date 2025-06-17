@@ -4,6 +4,7 @@
     <OutputType>WinExe</OutputType>
     <TargetFramework>net8.0-windows</TargetFramework>
     <UseWPF>true</UseWPF>
+    <UseWindowsForms>true</UseWindowsForms>
     <StartupObject>FlashMemo.App</StartupObject>
     <AssemblyTitle>FlashMemo - パッとメモ</AssemblyTitle>
     <AssemblyDescription>Lightning-fast memo app for Windows</AssemblyDescription>
@@ -19,9 +20,5 @@
     <EnableCompressionInSingleFile>true</EnableCompressionInSingleFile>
     <IncludeNativeLibrariesForSelfExtract>true</IncludeNativeLibrariesForSelfExtract>
   </PropertyGroup>
-
-  <ItemGroup>
-    <PackageReference Include="System.Windows.Forms" Version="8.0.0" />
-  </ItemGroup>
 
 </Project>
