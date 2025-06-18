@@ -29,13 +29,13 @@ namespace FlashMemo
             _hotkeyService = new GlobalHotkeyService();
             _hotkeyService.HotkeyPressed += OnHotkeyPressed;
             
-            // デフォルトホットキー（Ctrl+Shift+M）を登録
-            if (!_hotkeyService.RegisterHotkey(System.Windows.Forms.Keys.M, 
-                GlobalHotkeyService.MOD_CONTROL | GlobalHotkeyService.MOD_SHIFT))
-            {
-                MessageBox.Show("ホットキーの登録に失敗しました。他のアプリケーションが同じキーを使用している可能性があります。",
-                    "FlashMemo", MessageBoxButton.OK, MessageBoxImage.Warning);
-            }
+            // ホットキー機能を一時的に無効化
+            // if (!_hotkeyService.RegisterHotkey(System.Windows.Forms.Keys.M, 
+            //     GlobalHotkeyService.MOD_CONTROL | GlobalHotkeyService.MOD_SHIFT))
+            // {
+            //     MessageBox.Show("ホットキーの登録に失敗しました。他のアプリケーションが同じキーを使用している可能性があります。",
+            //         "FlashMemo", MessageBoxButton.OK, MessageBoxImage.Warning);
+            // }
 
             // メインウィンドウを表示しない（常駐モード）
             MainWindow = null;
@@ -49,7 +49,7 @@ namespace FlashMemo
             _notifyIcon = new System.Windows.Forms.NotifyIcon
             {
                 Icon = SystemIcons.Application,
-                Text = "FlashMemo - パッとメモ (Ctrl+Shift+M)",
+                Text = "パッとメモ (ダブルクリックで開く)",
                 Visible = true
             };
 

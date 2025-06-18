@@ -142,6 +142,9 @@ namespace FlashMemo
         /// </summary>
         public new void Show()
         {
+            // ウィンドウ状態を初期化
+            ResetWindowState();
+            
             base.Show();
             
             // 最前面に表示してフォーカスを設定
@@ -153,6 +156,25 @@ namespace FlashMemo
             // 画面中央に配置
             Left = (SystemParameters.PrimaryScreenWidth - Width) / 2;
             Top = (SystemParameters.PrimaryScreenHeight - Height) / 2;
+        }
+
+        /// <summary>
+        /// ウィンドウ状態を初期状態にリセット
+        /// </summary>
+        private void ResetWindowState()
+        {
+            // テキストをクリア
+            MemoTextBox.Text = string.Empty;
+            
+            // ウィンドウサイズを初期値にリセット
+            Width = 500;
+            Height = 400;
+            
+            // ウィンドウ位置を中央にリセット
+            WindowStartupLocation = WindowStartupLocation.CenterScreen;
+            
+            // タイトルを初期状態にリセット
+            Title = "パッとメモ";
         }
     }
 }
