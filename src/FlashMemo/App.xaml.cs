@@ -49,7 +49,7 @@ namespace FlashMemo
             _notifyIcon = new System.Windows.Forms.NotifyIcon
             {
                 Icon = SystemIcons.Application,
-                Text = "パッとメモ (ダブルクリックで開く)",
+                Text = "パッとメモ (クリックで開く)",
                 Visible = true
             };
 
@@ -62,6 +62,16 @@ namespace FlashMemo
 
             // ダブルクリックでメモを開く
             _notifyIcon.DoubleClick += (s, e) => ShowMainWindow();
+            
+            // シングルクリックでも開く（より使いやすく）
+            _notifyIcon.Click += (s, e) =>
+            {
+                var mouseEvent = e as System.Windows.Forms.MouseEventArgs;
+                if (mouseEvent?.Button == System.Windows.Forms.MouseButtons.Left)
+                {
+                    ShowMainWindow();
+                }
+            };
         }
 
         /// <summary>
