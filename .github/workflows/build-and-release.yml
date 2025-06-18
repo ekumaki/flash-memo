@@ -57,21 +57,21 @@ jobs:
       run: dotnet publish src/FlashMemo/FlashMemo.csproj -c Release -r win-x64 --self-contained true -p:PublishSingleFile=true -p:PublishReadyToRun=true -p:PublishTrimmed=false -p:EnableCompressionInSingleFile=false -o build/output/Standalone
 
     - name: Check Build Results
-
+    
       shell: powershell
-
+      
       run: |
-
+      
         if (Test-Path "build/output/Release/FlashMemo.exe") {
 
-          Write-Host "✅ Release build successful"
-
+          Write-Host "Release build successful"
+          
           $size = (Get-Item "build/output/Release/FlashMemo.exe").Length
-
-          Write-Host "📦 Release binary size: $([math]::Round($size/1MB, 2)) MB"
-
+          
+          Write-Host "Release binary size: $([math]::Round($size/1MB, 2)) MB"
+          
         }
-
+        
 #        if (Test-Path "build/output/Standalone/FlashMemo.exe") {
 
 #         Write-Host "✅ Standalone build successful"  
