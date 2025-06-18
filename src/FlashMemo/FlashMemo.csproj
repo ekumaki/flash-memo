@@ -4,8 +4,9 @@
     <OutputType>WinExe</OutputType>
     <TargetFramework>net8.0-windows</TargetFramework>
     <UseWPF>true</UseWPF>
+    <UseWindowsForms>true</UseWindowsForms>
     <StartupObject>FlashMemo.App</StartupObject>
-    <ApplicationIcon>..\..\src\Assets\Icons\app-256.ico</ApplicationIcon>
+    <ApplicationIcon>../Assets/Icons/flashmemo-icon.ico</ApplicationIcon>
     <AssemblyTitle>FlashMemo - パッとメモ</AssemblyTitle>
     <AssemblyDescription>Lightning-fast memo app for Windows</AssemblyDescription>
     <AssemblyVersion>1.0.0.0</AssemblyVersion>
@@ -13,17 +14,16 @@
     <Copyright>© 2024 FlashMemo</Copyright>
     <Company>FlashMemo</Company>
     <Product>FlashMemo</Product>
-    <AssemblyMetadata Include="AppDisplayName" Value="パッとメモ / FlashMemo" />
     <PublishSingleFile>true</PublishSingleFile>
     <PublishReadyToRun>true</PublishReadyToRun>
     <SelfContained>false</SelfContained>
     <PublishTrimmed>false</PublishTrimmed>
-    <EnableCompressionInSingleFile>true</EnableCompressionInSingleFile>
-    <IncludeNativeLibrariesForSelfExtract>true</IncludeNativeLibrariesForSelfExtract>
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="System.Windows.Forms" Version="8.0.0" />
+    <Content Include="../Assets/Icons/flashmemo-icon.ico">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
 
 </Project>

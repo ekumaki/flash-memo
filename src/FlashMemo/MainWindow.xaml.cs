@@ -21,6 +21,28 @@ namespace FlashMemo
             
             // ウィンドウの初期設定
             WindowStartupLocation = WindowStartupLocation.CenterScreen;
+            
+            // アイコンを設定
+            SetWindowIcon();
+        }
+
+        /// <summary>
+        /// ウィンドウアイコンを設定
+        /// </summary>
+        private void SetWindowIcon()
+        {
+            try
+            {
+                var iconPath = System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "flashmemo-icon.ico");
+                if (System.IO.File.Exists(iconPath))
+                {
+                    Icon = new System.Windows.Media.Imaging.BitmapImage(new Uri(iconPath));
+                }
+            }
+            catch
+            {
+                // アイコンファイルがない場合はデフォルトアイコンを使用
+            }
         }
 
         /// <summary>
@@ -48,7 +70,7 @@ namespace FlashMemo
             var elapsed = DateTime.Now - _windowShowTime;
             if (elapsed.TotalMilliseconds > 500)
             {
-                Hide();
+                Application.Current.Shutdown();
             }
         }
 
@@ -65,7 +87,7 @@ namespace FlashMemo
         /// </summary>
         private void CloseButton_Click(object sender, RoutedEventArgs e)
         {
-            Hide();
+            Application.Current.Shutdown();
         }
 
         /// <summary>
@@ -82,7 +104,7 @@ namespace FlashMemo
             // Escape で閉じる
             else if (e.Key == Key.Escape)
             {
-                Hide();
+                Application.Current.Shutdown();
                 e.Handled = true;
             }
         }
@@ -105,8 +127,8 @@ namespace FlashMemo
                 // テキストをクリア
                 MemoTextBox.Text = string.Empty;
                 
-                // ウィンドウを隠す
-                Hide();
+                // アプリケーションを終了
+                Application.Current.Shutdown();
             }
             catch (Exception ex)
             {
@@ -142,6 +164,9 @@ namespace FlashMemo
         /// </summary>
         public new void Show()
         {
+            // ウィンドウ状態を初期化
+            ResetWindowState();
+            
             base.Show();
             
             // 最前面に表示してフォーカスを設定
@@ -153,6 +178,25 @@ namespace FlashMemo
             // 画面中央に配置
             Left = (SystemParameters.PrimaryScreenWidth - Width) / 2;
             Top = (SystemParameters.PrimaryScreenHeight - Height) / 2;
+        }
+
+        /// <summary>
+        /// ウィンドウ状態を初期状態にリセット
+        /// </summary>
+        private void ResetWindowState()
+        {
+            // テキストをクリア
+            MemoTextBox.Text = string.Empty;
+            
+            // ウィンドウサイズを初期値にリセット
+            Width = 500;
+            Height = 400;
+            
+            // ウィンドウ位置を中央にリセット
+            WindowStartupLocation = WindowStartupLocation.CenterScreen;
+            
+            // タイトルを初期状態にリセット
+            Title = "パッとメモ";
         }
     }
 }
