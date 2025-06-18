@@ -21,6 +21,28 @@ namespace FlashMemo
             
             // ウィンドウの初期設定
             WindowStartupLocation = WindowStartupLocation.CenterScreen;
+            
+            // アイコンを設定
+            SetWindowIcon();
+        }
+
+        /// <summary>
+        /// ウィンドウアイコンを設定
+        /// </summary>
+        private void SetWindowIcon()
+        {
+            try
+            {
+                var iconPath = System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "flashmemo-icon.ico");
+                if (System.IO.File.Exists(iconPath))
+                {
+                    Icon = new System.Windows.Media.Imaging.BitmapImage(new Uri(iconPath));
+                }
+            }
+            catch
+            {
+                // アイコンファイルがない場合はデフォルトアイコンを使用
+            }
         }
 
         /// <summary>
