@@ -2,7 +2,6 @@
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         Title="パッとメモ"
-        Icon="../Assets/Icons/flashmemo-icon.ico"
         Width="500" 
         Height="400"
         MinWidth="350"

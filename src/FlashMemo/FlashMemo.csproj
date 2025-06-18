@@ -6,7 +6,7 @@
     <UseWPF>true</UseWPF>
     <UseWindowsForms>true</UseWindowsForms>
     <StartupObject>FlashMemo.App</StartupObject>
-    <ApplicationIcon>../Assets/Icons/flashmemo-icon.ico</ApplicationIcon>
+    <!-- <ApplicationIcon>../Assets/Icons/flashmemo-icon.ico</ApplicationIcon> -->
     <AssemblyTitle>FlashMemo - パッとメモ</AssemblyTitle>
     <AssemblyDescription>Lightning-fast memo app for Windows</AssemblyDescription>
     <AssemblyVersion>1.0.0.0</AssemblyVersion>
@@ -19,5 +19,6 @@
     <SelfContained>false</SelfContained>
     <PublishTrimmed>false</PublishTrimmed>
   </PropertyGroup>
+
 
 </Project>
