@@ -48,7 +48,7 @@ namespace FlashMemo
             var elapsed = DateTime.Now - _windowShowTime;
             if (elapsed.TotalMilliseconds > 500)
             {
-                Hide();
+                Application.Current.Shutdown();
             }
         }
 
@@ -65,7 +65,7 @@ namespace FlashMemo
         /// </summary>
         private void CloseButton_Click(object sender, RoutedEventArgs e)
         {
-            Hide();
+            Application.Current.Shutdown();
         }
 
         /// <summary>
@@ -82,7 +82,7 @@ namespace FlashMemo
             // Escape で閉じる
             else if (e.Key == Key.Escape)
             {
-                Hide();
+                Application.Current.Shutdown();
                 e.Handled = true;
             }
         }
@@ -105,8 +105,8 @@ namespace FlashMemo
                 // テキストをクリア
                 MemoTextBox.Text = string.Empty;
                 
-                // ウィンドウを隠す
-                Hide();
+                // アプリケーションを終了
+                Application.Current.Shutdown();
             }
             catch (Exception ex)
             {
