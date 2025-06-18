@@ -52,9 +52,9 @@ jobs:
 
 
 
-    - name: Build Standalone
+#    - name: Build Standalone
 
-      run: dotnet publish src/FlashMemo/FlashMemo.csproj -c Release -r win-x64 --self-contained true -p:PublishSingleFile=true -p:PublishReadyToRun=true -p:PublishTrimmed=false -p:EnableCompressionInSingleFile=false -o build/output/Standalone
+#      run: dotnet publish src/FlashMemo/FlashMemo.csproj -c Release -r win-x64 --self-contained true -p:PublishSingleFile=true -p:PublishReadyToRun=true -p:PublishTrimmed=false -p:EnableCompressionInSingleFile=false -o build/output/Standalone
 
     - name: Check Build Results
     
