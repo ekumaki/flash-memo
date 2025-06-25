@@ -109,7 +109,3 @@
             build/output/Release/FlashMemo.exe
           retention-days: 30
         if: always()
-          build/output/Release/FlashMemo.exe
-          build/output/Standalone/FlashMemo.exe
-        retention-days: 30
-      if: always()
