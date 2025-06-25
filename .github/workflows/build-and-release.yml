@@ -61,15 +61,11 @@
         run: |
 
           if (Test-Path "build/output/Release/FlashMemo.exe") {
-
             Write-Host "✅ Release build successful"
-
             $size = (Get-Item "build/output/Release/FlashMemo.exe").Length
-
             Write-Host "📦 Release binary size: $([math]::Round($size/1MB, 2)) MB"
-
           }
-
+    
           # if (Test-Path "build/output/Standalone/FlashMemo.exe") {
           #   Write-Host "✅ Standalone build successful"  
           #   $size = (Get-Item "build/output/Standalone/FlashMemo.exe").Length
