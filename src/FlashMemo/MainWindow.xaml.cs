@@ -1,5 +1,6 @@
 using System;
 using System.Windows;
+using System.Windows.Controls;
 using System.Windows.Input;
 using FlashMemo.Services;
 
@@ -12,7 +13,8 @@ namespace FlashMemo
     public partial class MainWindow : Window
     {
         private readonly ClipboardService _clipboardService;
-        private DateTime _windowShowTime;
+        
+        private bool _isPinned;
 
         public MainWindow()
         {
@@ -24,6 +26,8 @@ namespace FlashMemo
             
             // アイコンを設定
             SetWindowIcon();
+            
+
         }
 
         /// <summary>
@@ -50,28 +54,23 @@ namespace FlashMemo
         /// </summary>
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
-            _windowShowTime = DateTime.Now;
+
             
             // テキストボックスにフォーカスを設定
             MemoTextBox.Focus();
             MemoTextBox.CaretIndex = MemoTextBox.Text.Length;
             
-            // ウィンドウを最前面に表示
-            Topmost = true;
+            UpdatePinState();
             Activate();
         }
 
         /// <summary>
-        /// ウィンドウが非アクティブになったときの処理（自動的に閉じる）
+        /// ウィンドウが閉じられるときの処理
         /// </summary>
-        private void Window_Deactivated(object sender, EventArgs e)
+        protected override void OnClosing(System.ComponentModel.CancelEventArgs e)
         {
-            // ウィンドウが表示されてから500ms以降であれば自動的に閉じる
-            var elapsed = DateTime.Now - _windowShowTime;
-            if (elapsed.TotalMilliseconds > 500)
-            {
-                Application.Current.Shutdown();
-            }
+            base.OnClosing(e);
+            Application.Current.Shutdown();
         }
 
         /// <summary>
@@ -89,6 +88,40 @@ namespace FlashMemo
         {
             Application.Current.Shutdown();
         }
+
+        /// <summary>
+        /// ピンボタンのクリック処理
+        /// </summary>
+        internal void PinButton_Click(object sender, RoutedEventArgs e)
+        {
+            TogglePin();
+        }
+
+        /// <summary>
+        /// ピン状態を切り替える
+        /// </summary>
+        internal void TogglePin()
+        {
+            _isPinned = !_isPinned;
+            UpdatePinState();
+        }
+
+        /// <summary>
+        /// ピン状態を更新する
+        /// </summary>
+        internal void UpdatePinState()
+        {
+            Topmost = _isPinned;
+            if (PinButton != null)
+            {
+                PinButton.Opacity = _isPinned ? 1.0 : 0.5;
+            }
+        }
+
+        /// <summary>
+        /// テスト用にMemoTextBoxを公開
+        /// </summary>
+        internal TextBox MemoTextBoxControl => MemoTextBox;
 
         /// <summary>
         /// テキストボックスでのキー入力処理
@@ -112,7 +145,7 @@ namespace FlashMemo
         /// <summary>
         /// テキストをクリップボードにコピーしてウィンドウを閉じる
         /// </summary>
-        private void CopyTextAndClose()
+        internal void CopyTextAndClose()
         {
             try
             {
@@ -169,8 +202,8 @@ namespace FlashMemo
             
             base.Show();
             
-            // 最前面に表示してフォーカスを設定
-            Topmost = true;
+            // ピン状態を反映
+            UpdatePinState();
             Activate();
             Focus();
             MemoTextBox.Focus();
