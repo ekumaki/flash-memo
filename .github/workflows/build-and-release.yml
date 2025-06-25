@@ -59,7 +59,6 @@
         shell: powershell
 
         run: |
-
           if (Test-Path "build/output/Release/FlashMemo.exe") {
             Write-Host "✅ Release build successful"
             $size = (Get-Item "build/output/Release/FlashMemo.exe").Length
