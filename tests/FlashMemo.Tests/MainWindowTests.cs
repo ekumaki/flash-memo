@@ -31,7 +31,7 @@ namespace FlashMemo.Tests
             // Arrange
             var mainWindow = new MainWindow();
             var testText = "Test text";
-            mainWindow.MemoTextBox.Text = testText;
+            mainWindow.MemoTextBoxControl.Text = testText;
             
             // Act
             mainWindow.CopyTextAndClose();

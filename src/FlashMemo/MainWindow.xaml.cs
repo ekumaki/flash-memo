@@ -89,19 +89,25 @@ namespace FlashMemo
         }
 
         /// <summary>
-        /// テキストボックスでのキー入力処理
+        /// ピンボタンのクリック処理
         /// </summary>
         internal void PinButton_Click(object sender, RoutedEventArgs e)
         {
             TogglePin();
         }
 
+        /// <summary>
+        /// ピン状態を切り替える
+        /// </summary>
         internal void TogglePin()
         {
             _isPinned = !_isPinned;
             UpdatePinState();
         }
 
+        /// <summary>
+        /// ピン状態を更新する
+        /// </summary>
         internal void UpdatePinState()
         {
             Topmost = _isPinned;
@@ -111,8 +117,14 @@ namespace FlashMemo
             }
         }
 
-        internal TextBox MemoTextBox => memoTextBox;
+        /// <summary>
+        /// テスト用にMemoTextBoxを公開
+        /// </summary>
+        internal TextBox MemoTextBoxControl => MemoTextBox;
 
+        /// <summary>
+        /// テキストボックスでのキー入力処理
+        /// </summary>
         private void MemoTextBox_KeyDown(object sender, KeyEventArgs e)
         {
             // Ctrl+Enter でコピー&閉じる
