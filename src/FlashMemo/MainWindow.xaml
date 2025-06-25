@@ -62,5 +62,6 @@
                     Background="#6C757D"
                     Click="CloseButton_Click"/>
         </StackPanel>
+        </Grid>
     </Grid>
 </Window>
