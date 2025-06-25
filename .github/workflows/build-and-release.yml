@@ -26,8 +26,7 @@
         run: dotnet publish src/FlashMemo/FlashMemo.csproj -c Release -r win-x64 --self-contained false -p:PublishSingleFile=true -p:PublishReadyToRun=true -o build/output/Release
 
       # - name: Build Standalone
-      #   run: dotnet publish src/FlashMemo/FlashMemo.csproj -c Release -r win-x64 --self-contained true -p:PublishSingleFile=true -p:PublishReadyToRun=true -p:PublishTrimmed=false 
-  -p:EnableCompressionInSingleFile=false -o build/output/Standalone
+      #   run: dotnet publish src/FlashMemo/FlashMemo.csproj -c Release -r win-x64 --self-contained true -p:PublishSingleFile=true -p:PublishReadyToRun=true -p:PublishTrimmed=false -p:EnableCompressionInSingleFile=false -o build/output/Standalone
 
       - name: Check Build Results
         shell: powershell
